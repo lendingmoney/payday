@@ -1,23 +1,22 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LendingMoney – Same Day Loans</title>
- 
+
 <style>
 * {
     box-sizing: border-box;
-    "Segoe UI", Arial, sans-serif;
+    font-family: "Segoe UI", Arial, sans-serif;
 }
- 
+
 body {
-    0;
+    margin: 0;
     background: #f5f5f5;
     color: #222;
 }
- 
+
 /* HEADER */
 .header {
     display: flex;
@@ -27,65 +26,65 @@ body {
     background: #111;
     color: #fff;
 }
- 
+
 .logo {
     font-size: 22px;
     font-weight: bold;
 }
- 
+
 .logo span {
     color: #ff5a1f;
 }
- 
+
 .call-header {
     background: #ff5a1f;
     padding: 12px 18px;
     border-radius: 6px;
 }
- 
+
 .call-header a {
     color: #fff;
     text-decoration: none;
     font-weight: bold;
 }
- 
+
 /* HERO */
 .hero {
     background: linear-gradient(
         rgba(0,0,0,0.6),
         rgba(0,0,0,0.6)
     ),
-    u rl("https://images.unsplash.com/photo-1605902711622-cfb43c4437d1");
+    url("https://images.unsplash.com/photo-1605902711622-cfb43c4437d1");
     background-size: cover;
     background-position: center;
     padding: 60px 20px;
 }
- 
+
 .hero-container {
     max-width: 1100px;
-    auto;
+    margin: auto;
     display: flex;
     gap: 30px;
     align-items: center;
 }
- 
+
 /* LEFT TEXT */
 .hero-text {
     flex: 1;
     color: #fff;
 }
- 
+
 .hero-text h1 {
     font-size: 40px;
-    15px;
+    margin-bottom: 15px;
 }
- 
+
 .hero-text p {
     font-size: 16px;
-    1.6;
-    25px;
+    line-height: 1.6;
+    margin-bottom: 25px;
 }
- 
+
 .hero-text .call-btn {
     display: inline-block;
     background: #ff5a1f;
@@ -96,7 +95,7 @@ body {
     text-decoration: none;
     border-radius: 8px;
 }
- 
+
 /* FORM */
 .form-box {
     flex: 0.9;
@@ -105,20 +104,20 @@ body {
     border-radius: 12px;
     color: #fff;
 }
- 
+
 .form-box h2 {
-    15px;
+    margin-bottom: 15px;
 }
- 
+
 .form-box input {
     width: 100%;
     padding: 14px;
-    12px;
+    margin-bottom: 12px;
     border-radius: 6px;
     border: none;
     font-size: 15px;
 }
- 
+
 .form-box button {
     width: 100%;
     padding: 15px;
@@ -130,7 +129,7 @@ body {
     border-radius: 6px;
     cursor: pointer;
 }
- 
+
 #thankyou {
     display: none;
     text-align: center;
@@ -138,36 +137,36 @@ body {
     padding: 20px;
     background: #0f5132;
     border-radius: 8px;
-    10px;
+    margin-top: 10px;
 }
- 
+
 /* MOBILE */
 @media (max-width: 768px) {
     .hero-container {
         flex-direction: column;
     }
- 
+
     .hero-text h1 {
         font-size: 30px;
     }
 }
 </style>
 </head>
- 
+
 <body>
- 
+
 <!-- HEADER -->
 <div class="header">
     <div class="logo">Lending<span>Money</span></div>
     <div class="call-header">
-        <a href=''>📞 Call Now</a>
+        <a href="tel:+19034938077">📞 Call Now</a>
     </div>
 </div>
- 
+
 <!-- HERO -->
 <section class="hero">
     <div class="hero-container">
- 
+
         <!-- LEFT -->
         <div class="hero-text">
             <h1>Looking for a Same Day Loan?</h1>
@@ -175,37 +174,37 @@ body {
                 Speak directly with a LendingMoney specialist.
                 Fast approval. No long wait times.
             </p>
- 
-            <a href='' class="call-btn">
+
+            <a href="tel:+19034938077" class="call-btn">
                 📞 Call 903-493-8077 Now
             </a>
         </div>
- 
+
         <!-- FORM -->
         <div class="form-box" id="formBox">
             <h2>Request a Call Back</h2>
- 
+
             <form id="loanForm" action="https://formspree.io/f/meeoabvp" method="POST">
                 <input type="text" name="First Name" placeholder="First Name" required>
                 <input type="text" name="Last Name" placeholder="Last Name" required>
                 <input type="tel" name="Phone" placeholder="Phone Number" required>
                 <input type="number" name="Loan Amount" placeholder="Loan Amount" required>
- 
+
                 <button type="submit">Apply for a Loan Now</button>
             </form>
- 
+
             <div id="thankyou">
                 ✅ Thank you!  
                 <br>We received your request and will call you shortly.
             </div>
         </div>
- 
+
     </div>
 </section>
- 
+
 <script>
 const form = document.getElementById("loanForm");
- 
+
 form.addEventListener("submit", function() {
     setTimeout(() => {
         form.style.display = "none";
@@ -213,6 +212,6 @@ form.addEventListener("submit", function() {
     }, 500);
 });
 </script>
- 
+
 </body>
 </html>
