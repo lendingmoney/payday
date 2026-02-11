@@ -1,217 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LendingMoney – Same Day Loans</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fullscreen Toggle on ESC</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #0078d7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            overflow: hidden;
+            cursor: default;
+        }
 
-<style>
-* {
-    box-sizing: border-box;
-    font-family: "Segoe UI", Arial, sans-serif;
-}
+        .content {
+            text-align: center;
+            pointer-events: none; /* Allows clicking through to background if needed */
+        }
 
-body {
-    margin: 0;
-    background: #f5f5f5;
-    color: #222;
-}
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
 
-/* HEADER */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    background: #111;
-    color: #fff;
-}
+        p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
 
-.logo {
-    font-size: 22px;
-    font-weight: bold;
-}
-
-.logo span {
-    color: #ff5a1f;
-}
-
-.call-header {
-    background: #ff5a1f;
-    padding: 12px 18px;
-    border-radius: 6px;
-}
-
-.call-header a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-/* HERO */
-.hero {
-    background: linear-gradient(
-        rgba(0,0,0,0.6),
-        rgba(0,0,0,0.6)
-    ),
-    url("https://images.unsplash.com/photo-1605902711622-cfb43c4437d1");
-    background-size: cover;
-    background-position: center;
-    padding: 60px 20px;
-}
-
-.hero-container {
-    max-width: 1100px;
-    margin: auto;
-    display: flex;
-    gap: 30px;
-    align-items: center;
-}
-
-/* LEFT TEXT */
-.hero-text {
-    flex: 1;
-    color: #fff;
-}
-
-.hero-text h1 {
-    font-size: 40px;
-    margin-bottom: 15px;
-}
-
-.hero-text p {
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 25px;
-}
-
-.hero-text .call-btn {
-    display: inline-block;
-    background: #ff5a1f;
-    padding: 16px 26px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 8px;
-}
-
-/* FORM */
-.form-box {
-    flex: 0.9;
-    background: #1e2430;
-    padding: 30px;
-    border-radius: 12px;
-    color: #fff;
-}
-
-.form-box h2 {
-    margin-bottom: 15px;
-}
-
-.form-box input {
-    width: 100%;
-    padding: 14px;
-    margin-bottom: 12px;
-    border-radius: 6px;
-    border: none;
-    font-size: 15px;
-}
-
-.form-box button {
-    width: 100%;
-    padding: 15px;
-    background: #ff5a1f;
-    color: #fff;
-    border: none;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-#thankyou {
-    display: none;
-    text-align: center;
-    font-size: 18px;
-    padding: 20px;
-    background: #0f5132;
-    border-radius: 8px;
-    margin-top: 10px;
-}
-
-/* MOBILE */
-@media (max-width: 768px) {
-    .hero-container {
-        flex-direction: column;
-    }
-
-    .hero-text h1 {
-        font-size: 30px;
-    }
-}
-</style>
+        /* Status indicator to show when holding ESC */
+        #status {
+            position: absolute;
+            bottom: 20px;
+            font-size: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: opacity 0.3s;
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- HEADER -->
-<div class="header">
-    <div class="logo">Lending<span>Money</span></div>
-    <div class="call-header">
-        <a href="tel:+19034938077">📞 Call Now</a>
+    <div class="content">
+        <h1>Fullscreen Mode</h1>
+        <p>Press <strong>ESC</strong> to toggle full screen.</p>
+        <p>Hold ESC for <strong>15 seconds</strong> to exit.</p>
     </div>
-</div>
 
-<!-- HERO -->
-<section class="hero">
-    <div class="hero-container">
+    <div id="status">Press and hold ESC...</div>
 
-        <!-- LEFT -->
-        <div class="hero-text">
-            <h1>Looking for a Same Day Loan?</h1>
-            <p>
-                Speak directly with a LendingMoney specialist.
-                Fast approval. No long wait times.
-            </p>
+    <script>
+        let isFull = false;
+        let isHolding = false;
+        let holdStartTime = 0;
+        const holdDuration = 15000; // 15 seconds in milliseconds
 
-            <a href="tel:+19034938077" class="call-btn">
-                📞 Call 903-493-8077 Now
-            </a>
-        </div>
+        // Function to toggle full screen
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
 
-        <!-- FORM -->
-        <div class="form-box" id="formBox">
-            <h2>Request a Call Back</h2>
+        // Event listener for keydown
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (isHolding) {
+                    // If already holding, do nothing (keep holding logic in loop)
+                } else {
+                    // Start holding
+                    isHolding = true;
+                    holdStartTime = Date.now();
+                    updateStatus('Holding ESC...');
+                }
+            }
+        });
 
-            <form id="loanForm" action="https://dev-path-1.preview.emergentagent.com/api/submit/bf6ff6b9-66c9-4b20-b75e-547e3734fae1" method="POST">
-                <input type="text" name="First Name" placeholder="First Name" required>
-                <input type="text" name="Last Name" placeholder="Last Name" required>
-                <input type="tel" name="Phone" placeholder="Phone Number" required>
-                <input type="number" name="Loan Amount" placeholder="Loan Amount" required>
+        // Event listener for keyup
+        document.addEventListener('keyup', (f) => {
+            if (f.key === 'Escape') {
+                // If we held it for less than 15 seconds, toggle full screen
+                const elapsedTime = Date.now() - holdStartTime;
+                if (elapsedTime < holdDuration) {
+                    toggleFullScreen();
+                }
+                
+                // Reset state
+                isHolding = false;
+                updateStatus('Press and hold ESC...');
+            }
+        });
 
-                <button type="submit">Apply for a Loan Now</button>
-            </form>
+        // Loop to check holding duration
+        setInterval(() => {
+            if (isHolding) {
+                const elapsedTime = Date.now() - holdStartTime;
+                if (elapsedTime >= holdDuration) {
+                    // Time is up, force exit full screen
+                    if (document.fullscreenElement) {
+                        document.exitFullscreen().catch(err => {
+                            console.log(`Error exiting full-screen: ${err.message}`);
+                        });
+                    }
+                    isHolding = false;
+                    updateStatus('Exited due to long hold.');
+                }
+            }
+        }, 100);
 
-            <div id="thankyou">
-                ✅ Thank you!  
-                <br>We received your request and will call you shortly.
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<script>
-const form = document.getElementById("loanForm");
-
-form.addEventListener("submit", function() {
-    setTimeout(() => {
-        form.style.display = "none";
-        document.getElementById("thankyou").style.display = "block";
-    }, 500);
-});
-</script>
-
+        function updateStatus(msg) {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = msg;
+            statusEl.style.opacity = '1';
+        }
+    </script>
 </body>
 </html>
